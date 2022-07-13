@@ -36,3 +36,36 @@ s3_bucket=upgrad-vijaya
 aws s3 \
 cp /tmp/${myname}-httpd-logs-${timestamp}.tar \
 s3://${s3_bucket}/${myname}-httpd-logs-${timestamp}.tar
+
+
+File=/var/www/html/inventory.html
+if [ -f "$File" ]; then
+echo "inventory.html exists "
+else
+echo "inventory.html does not exists"
+fi
+
+
+{
+
+echo "<table>"
+echo "<thead>"
+echo "<th>Log Type&emsp;</th>"
+echo "<th>Date Created&emsp;&emsp;</th>"
+echo "<th>Type&emsp;</th>"
+echo "<th>Size&emsp;</th>"
+echo "</thead>"
+echo "</table>"
+} > /var/www/html/inventory.html
+{
+echo "<tbody>"
+echo "<tr>"
+echo "<td>httpd-logs&emsp;</td>"
+echo "<td>$timestamp&emsp;</td>"
+echo "<td>tar&emsp;</td>"
+echo "<td>$var&emsp;</td>"
+} >> /var/www/html/inventory.html
+
+
+echo "0 0 * * * root /root/Automation_Project/automation.sh" > /etc/cron.d/automation
+
